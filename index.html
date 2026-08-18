@@ -42,8 +42,8 @@
                         <h4 class="font-bold text-slate-800 text-sm mb-1">Step 1: Test Bolus Monitoring Scan Setup</h4>
                         <ul class="list-disc pl-4 space-y-1">
                             <li>Position dynamic monitoring slice at the level of the <strong>Main Pulmonary Artery (MPA) trunk</strong>.</li>
-                            <li><strong>Engine A (Bae):</strong> Inject 20 mL contrast (370 mgI/mL) + 20 mL saline, 4.5mL/s</li>
-                            <li><strong>Engine B (Wu et al.):</strong> Inject 5 mL contrast (370 mgI/mL) + 45 mL saline, 4.5mL/s</li>
+                            <li><strong>Engine A (Bae):</strong> Inject 20 mL contrast (370 mgI/mL) + 20 mL saline @ <strong>4.5 mL/s</strong>.</li>
+                            <li><strong>Engine B (Wu et al.):</strong> Inject 5 mL contrast (370 mgI/mL) + 45 mL saline @ <strong>4.5 mL/s</strong>.</li>
                             <li>Start low-dose monitoring scans simultaneously with contrast injection.</li>
                         </ul>
                     </div>
@@ -54,13 +54,14 @@
                         
                         <!-- Figure & Caption Container for index.html -->
                         <div class="mb-4 flex flex-col items-center justify-center bg-slate-900 p-4 rounded-lg">
-    <img src="roi_guide.png" alt="Comparison of CTPA Contrast Timing Methods: Bae vs. Wu et al." class="w-full max-w-xl rounded-lg border border-slate-700 shadow" />
-    <p class="text-[11px] text-slate-300 mt-3 text-left leading-relaxed max-w-xl">
-        <strong>Figure: Anatomical ROI Placement & Time-Density Curves (TDC) for CTPA Timing.</strong><br>
-        <strong>1. Bae Equation Method (Single Vessel):</strong> Axial CT image demonstrating a single circular ROI located in the Main Pulmonary Artery (MPA, red). The single-line TDC curve identifies peak contrast arrival time (T<sub>ARR</sub>).<br>
-        <strong>2. Wu et al. Method (Dual Vessel):</strong> Axial CT image showing dual ROIs placed in the MPA (red) and Pulmonary Vein (PV, blue). The biphasic TDC tracks arterial and venous enhancement, identifying the intersection time (T<sub>CROSS</sub>) prior to venous contamination.
-    </p>
-</div>
+                            <img src="roi_guide.png" alt="Comparison of CTPA Contrast Timing Methods: Bae vs. Wu et al." class="w-full max-w-xl rounded-lg border border-slate-700 shadow" />
+                            <p class="text-[11px] text-slate-300 mt-3 text-left leading-relaxed max-w-xl">
+                                <strong>Figure: Anatomical ROI Placement & Time-Density Curves (TDC) for CTPA Timing.</strong><br>
+                                <strong>1. Bae Equation Method (Single Vessel):</strong> Axial CT image demonstrating a single circular ROI located in the Main Pulmonary Artery (MPA, red). The single-line TDC curve identifies peak contrast arrival time (T<sub>ARR</sub>).<br>
+                                <strong>2. Wu et al. Method (Dual Vessel):</strong> Axial CT image showing dual ROIs placed in the MPA (red) and Pulmonary Vein (PV, blue). The biphasic TDC tracks arterial and venous enhancement, identifying the intersection time (T<sub>CROSS</sub>) prior to venous contamination.
+                            </p>
+                        </div>
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div class="p-2.5 bg-blue-50 border border-blue-200 rounded">
                                 <strong class="text-blue-900 block mb-1">Engine A (Single ROI - Bae):</strong>
@@ -79,28 +80,31 @@
                     </div>
 
                     <!-- Step 3 -->
-<div>
-    <h4 class="font-bold text-slate-800 text-sm mb-1">Step 3: Scan Duration & Delay Calculation</h4>
-    <ul class="list-disc pl-4 space-y-1">
-        <li>Obtain <strong>Scan Duration (T<sub>SD</sub>)</strong> from diagnostic acquisition protocol card.</li>
-        <li>Enter T<sub>ARR</sub> or T<sub>CROSS</sub> into the calculator below to derive <strong>T<sub>DELAY</sub></strong>.</li>
-    </ul>
-</div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 3: Scan Duration & Delay Calculation</h4>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>Obtain <strong>Scan Duration (T<sub>SD</sub>)</strong> from diagnostic acquisition protocol card.</li>
+                            <li>Enter T<sub>ARR</sub> or T<sub>CROSS</sub> into the calculator below to derive <strong>T<sub>DELAY</sub></strong>.</li>
+                        </ul>
+                    </div>
 
-<!-- Step 4 -->
-<div>
-    <h4 class="font-bold text-slate-800 text-sm mb-1">Step 4: Scanner Console Setup & Diagnostic Execution</h4>
-    <ul class="list-disc pl-4 space-y-1">
-        <li>Enter the calculated <strong>T<sub>DELAY</sub></strong> value directly into the CT scanner console.</li>
-        <li>Program contrast injector for diagnostic scan at a flow rate of <strong>4.5 mL/s</strong>:
-            <ul class="list-circle pl-4 space-y-0.5 text-slate-500 mt-1">
-                <li><strong>Engine A (Bae Protocol):</strong> 30 mL contrast volume (+ saline chaser)</li>
-                <li><strong>Engine B (Wu Protocol):</strong> 15 mL contrast volume (+ saline chaser)</li>
-            </ul>
-        </li>
-        <li>Press the <strong>Injector Start</strong> and <strong>CT Scanner Start</strong> buttons simultaneously to initiate the diagnostic acquisition.</li>
-    </ul>
-</div>
+                    <!-- Step 4 -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 4: Scanner Console Setup & Diagnostic Execution</h4>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>Enter the calculated <strong>T<sub>DELAY</sub></strong> value directly into the CT scanner console.</li>
+                            <li>Program contrast injector for diagnostic scan at a flow rate of <strong>4.5 mL/s</strong>:
+                                <ul class="list-disc pl-6 space-y-0.5 text-slate-500 mt-1">
+                                    <li><strong>Engine A (Bae Protocol):</strong> 30 mL contrast volume (+ saline chaser)</li>
+                                    <li><strong>Engine B (Wu Protocol):</strong> 15 mL contrast volume (+ saline chaser)</li>
+                                </ul>
+                            </li>
+                            <li>Press the <strong>Injector Start</strong> and <strong>CT Scanner Start</strong> buttons simultaneously to initiate the diagnostic acquisition.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
 
             <!-- ================= ENGINE A: BAE EQUATION ================= -->
             <div id="sectionBae" class="space-y-5">
@@ -120,9 +124,9 @@
 
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Injection Flow Rate [mL/s]:</label>
-                        <input type="number" id="baeFlowRate" value="5.0" step="0.1" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <input type="number" id="baeFlowRate" value="4.5" step="0.1" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
                         <p class="text-[11px] text-slate-500 mt-1">
-                            <strong>Source:</strong> Programmed flow rate set on dual-head power injector (Standard: 4.0 - 5.0 mL/s).
+                            <strong>Standardized Protocol:</strong> Programmed flow rate set on dual-head power injector (4.5 mL/s).
                         </p>
                     </div>
 
@@ -153,7 +157,7 @@
                 <div class="p-3 bg-green-50 border-l-4 border-green-500 text-xs text-green-900 rounded-r">
                     <p class="font-bold">Wu et al. Biphasic Formula (2020):</p>
                     <p class="mt-1">T<sub>DELAY</sub> = T<sub>CROSS</sub> - T<sub>SD</sub></p>
-                    <p class="mt-0.5 text-[11px]">Protocol: 5 mL Test + 15 mL Diagnostic (Total 20 mL @ 370 mgI/mL)</p>
+                    <p class="mt-0.5 text-[11px]">Protocol: 5 mL Test + 15 mL Diagnostic (Total 20 mL @ 370 mgI/mL, 4.5 mL/s)</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -266,7 +270,7 @@
             document.getElementById('outputDelay').innerText = tDelay.toFixed(1) + " s";
             document.getElementById('outputDelay').className = "text-3xl font-extrabold text-green-700";
             document.getElementById('extraInfo').innerHTML = 
-                `<strong>Protocol Info:</strong> Optimized Low-Dose Protocol (60% Contrast Reduction: 20 mL Total @ 370 mgI/mL). Scan completes prior to venous contamination.`;
+                `<strong>Protocol Info:</strong> Optimized Low-Dose Protocol (60% Contrast Reduction: 20 mL Total @ 370 mgI/mL, 4.5 mL/s). Scan completes prior to venous contamination.`;
             document.getElementById('resultBox').classList.remove('hidden');
         }
     </script>
