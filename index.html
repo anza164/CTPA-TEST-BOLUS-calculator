@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTPA Scan Delay Calculator (Bae & Wu et al.)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+        <!-- Header -->
+        <div class="bg-blue-700 p-6 text-white">
+            <h1 class="text-2xl font-bold">CTPA Scan Delay Calculator</h1>
+            <p class="text-blue-200 text-sm mt-1">Precision Timing System for CT Pulmonary Angiography (Bae & Wu et al. Protocols)</p>
+        </div>
+
+        <!-- Engine Toggle Tabs -->
+        <div class="flex border-b border-slate-200 bg-slate-50">
+            <button id="btnBae" onclick="switchEngine('bae')" class="flex-1 py-3 px-4 text-sm font-semibold text-blue-700 border-b-2 border-blue-700 bg-white transition">
+                Engine A: Bae's Equation (50 mL Standard)
+            </button>
+            <button id="btnWu" onclick="switchEngine('wu')" class="flex-1 py-3 px-4 text-sm font-semibold text-slate-500 hover:text-blue-700 transition">
+                Engine B: Wu et al. (20 mL Low-Dose)
+            </button>
+        </div>
+
+        <div class="p-6">
+            
+            <!-- ================= STEP-BY-STEP SOP GUIDE WITH REAL IMAGE ================= -->
+            <div class="mb-6 border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
+                <button onclick="toggleSop()" class="w-full p-3 text-left font-semibold text-xs uppercase tracking-wider text-slate-700 flex justify-between items-center bg-slate-100 hover:bg-slate-200 transition">
+                    <span>📖 Clinical SOP & Anatomical ROI Placement Guide</span>
+                    <span id="sopToggleIcon" class="text-blue-600 font-bold">+ Expand Guide</span>
+                </button>
+                
+                <div id="sopContent" class="hidden p-4 text-xs text-slate-600 space-y-5 border-t border-slate-200 bg-white">
+                    
+                    <!-- Step 1 -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 1: Test Bolus Monitoring Scan Setup</h4>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>Position dynamic monitoring slice at the level of the <strong>Main Pulmonary Artery (MPA) trunk</strong>.</li>
+                            <li><strong>Engine A (Bae):</strong> Inject 20 mL contrast + 20 mL saline.</li>
+                            <li><strong>Engine B (Wu et al.):</strong> Inject 5 mL contrast (370 mgI/mL) + 45 mL saline.</li>
+                            <li>Start low-dose monitoring scans simultaneously with contrast injection.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Step 2: ROI Placement & Real Image -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-2">Step 2: ROI Placement & Curve Generation</h4>
+                        
+                        <!-- ROI GUIDE IMAGE INTEGRATION HERE -->
+                        <div class="mb-4 flex flex-col items-center justify-center bg-slate-900 p-3 rounded-lg">
+                            <img src="roi_guide.png" alt="CTPA ROI Placement" class="w-full max-w-sm rounded-lg border border-slate-700 shadow" />
+                            <span class="text-[11px] text-slate-300 mt-2">Figure: ROI 1 in MPA (Red Circle) and ROI 2 in Pulmonary Vein (Blue Circle)</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="p-2.5 bg-blue-50 border border-blue-200 rounded">
+                                <strong class="text-blue-900 block mb-1">Engine A (Single ROI - Bae):</strong>
+                                <p>1. Draw <strong>ROI 1 (Red)</strong> inside MPA trunk (~80-100 mm²).</p>
+                                <p>2. Generate single Time-Enhancement Curve (TEC).</p>
+                                <p>3. Identify <strong>T<sub>ARR</sub></strong> (second when HU begins rapid rise).</p>
+                            </div>
+                            <div class="p-2.5 bg-green-50 border border-green-200 rounded">
+                                <strong class="text-green-900 block mb-1">Engine B (Dual ROI - Wu et al.):</strong>
+                                <p>1. Draw <strong>ROI 1 (Red)</strong> inside MPA trunk.</p>
+                                <p>2. Draw <strong>ROI 2 (Blue)</strong> inside Pulmonary Vein (~20 mm²).</p>
+                                <p>3. Generate Biphasic Curve.</p>
+                                <p>4. Identify <strong>T<sub>CROSS</sub></strong> (intersection point of Artery & Vein curves).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 3: Scan Duration & Delay Calculation</h4>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>Obtain <strong>Scan Duration (T<sub>SD</sub>)</strong> from diagnostic acquisition protocol card.</li>
+                            <li>Enter T<sub>ARR</sub> or T<sub>CROSS</sub> into the calculator below to derive <strong>T<sub>DELAY</sub></strong>.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ================= ENGINE A: BAE EQUATION ================= -->
+            <div id="sectionBae" class="space-y-5">
+                <div class="p-3 bg-blue-50 border-l-4 border-blue-500 text-xs text-blue-900 rounded-r">
+                    <p class="font-bold">Bae's Standard Formula:</p>
+                    <p class="mt-1">T<sub>PEAK</sub> = T<sub>ID</sub> + T<sub>ARR</sub> - 5.3 &nbsp;|&nbsp; T<sub>DELAY</sub> = T<sub>PEAK</sub> - ½ T<sub>SD</sub></p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Contrast Arrival Time (T<sub>ARR</sub>) [sec]:</label>
+                        <input type="number" id="baeTarr" step="0.5" placeholder="e.g., 8.0" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            <strong>Source:</strong> Read from single-ROI MPA curve. Second when HU begins to sharply rise.
+                        </p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Injection Flow Rate [mL/s]:</label>
+                        <input type="number" id="baeFlowRate" value="5.0" step="0.1" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            <strong>Source:</strong> Programmed flow rate set on dual-head power injector (Standard: 4.0 - 5.0 mL/s).
+                        </p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Diagnostic Contrast Volume [mL]:</label>
+                        <input type="number" id="baeVol" value="30" readonly class="mt-1 block w-full bg-slate-100 border border-slate-300 rounded-md p-2 text-sm text-slate-600 font-medium">
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            <strong>Standard Protocol:</strong> Fixed at 30 mL diagnostic bolus (Total contrast volume = 50 mL).
+                        </p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Scan Duration (T<sub>SD</sub>) [sec]:</label>
+                        <input type="number" id="baeTsd" step="0.1" placeholder="e.g., 3.5" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            <strong>Source:</strong> Read total acquisition time from CT diagnostic protocol card.
+                        </p>
+                    </div>
+                </div>
+
+                <button onclick="calculateBae()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-md transition text-sm">
+                    Calculate Delay (Bae)
+                </button>
+            </div>
+
+            <!-- ================= ENGINE B: WU ET AL. EQUATION ================= -->
+            <div id="sectionWu" class="hidden space-y-5">
+                <div class="p-3 bg-green-50 border-l-4 border-green-500 text-xs text-green-900 rounded-r">
+                    <p class="font-bold">Wu et al. Biphasic Formula (2020):</p>
+                    <p class="mt-1">T<sub>DELAY</sub> = T<sub>CROSS</sub> - T<sub>SD</sub></p>
+                    <p class="mt-0.5 text-[11px]">Protocol: 5 mL Test + 15 mL Diagnostic (Total 20 mL @ 370 mgI/mL)</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Intersection Time (T<sub>CROSS</sub>) [sec]:</label>
+                        <input type="number" id="wuTcross" step="0.5" placeholder="e.g., 11.0" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-green-500 focus:border-green-500">
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            <strong>Source:</strong> Read from dual-ROI graph. Second where MPA curve and PV curve intersect.
+                        </p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Scan Duration (T<sub>SD</sub>) [sec]:</label>
+                        <input type="number" id="wuTsd" step="0.1" placeholder="e.g., 3.0" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            <strong>Source:</strong> Read total chest acquisition time from CT diagnostic protocol card.
+                        </p>
+                    </div>
+                </div>
+
+                <button onclick="calculateWu()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-4 rounded-md transition text-sm">
+                    Calculate Delay (Wu et al.)
+                </button>
+            </div>
+
+            <!-- ================= RESULT DISPLAY ================= -->
+            <div id="resultBox" class="hidden mt-6 p-4 rounded-lg bg-slate-50 border border-slate-200">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500">Calculation Summary:</h3>
+                <div class="flex items-baseline justify-between mt-2">
+                    <span class="text-slate-700 font-medium text-sm">Recommended Scan Delay (T<sub>DELAY</sub>):</span>
+                    <span id="outputDelay" class="text-3xl font-extrabold text-blue-700">0.0 s</span>
+                </div>
+                <div id="extraInfo" class="text-xs text-slate-500 mt-3 border-t border-slate-200 pt-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let currentEngine = 'bae';
+
+        function toggleSop() {
+            const sopContent = document.getElementById('sopContent');
+            const sopToggleIcon = document.getElementById('sopToggleIcon');
+            if (sopContent.classList.contains('hidden')) {
+                sopContent.classList.remove('hidden');
+                sopToggleIcon.innerText = '- Collapse Guide';
+            } else {
+                sopContent.classList.add('hidden');
+                sopToggleIcon.innerText = '+ Expand Guide';
+            }
+        }
+
+        function switchEngine(engine) {
+            currentEngine = engine;
+            const btnBae = document.getElementById('btnBae');
+            const btnWu = document.getElementById('btnWu');
+            const secBae = document.getElementById('sectionBae');
+            const secWu = document.getElementById('sectionWu');
+            const resultBox = document.getElementById('resultBox');
+
+            resultBox.classList.add('hidden');
+
+            if (engine === 'bae') {
+                btnBae.className = "flex-1 py-3 px-4 text-sm font-semibold text-blue-700 border-b-2 border-blue-700 bg-white transition";
+                btnWu.className = "flex-1 py-3 px-4 text-sm font-semibold text-slate-500 hover:text-blue-700 transition";
+                secBae.classList.remove('hidden');
+                secWu.classList.add('hidden');
+            } else {
+                btnWu.className = "flex-1 py-3 px-4 text-sm font-semibold text-green-700 border-b-2 border-green-700 bg-white transition";
+                btnBae.className = "flex-1 py-3 px-4 text-sm font-semibold text-slate-500 hover:text-blue-700 transition";
+                secWu.classList.remove('hidden');
+                secBae.classList.add('hidden');
+            }
+        }
+
+        function calculateBae() {
+            const tArr = parseFloat(document.getElementById('baeTarr').value);
+            const flowRate = parseFloat(document.getElementById('baeFlowRate').value);
+            const vol = parseFloat(document.getElementById('baeVol').value);
+            const tSd = parseFloat(document.getElementById('baeTsd').value);
+
+            if (isNaN(tArr) || isNaN(flowRate) || isNaN(tSd)) {
+                alert("Please fill in all required input fields with valid numbers.");
+                return;
+            }
+
+            const tId = vol / flowRate; 
+            const tPeak = tId + tArr - 5.3;
+            const tDelay = tPeak - (0.5 * tSd);
+
+            document.getElementById('outputDelay').innerText = tDelay.toFixed(1) + " s";
+            document.getElementById('outputDelay').className = "text-3xl font-extrabold text-blue-700";
+            document.getElementById('extraInfo').innerHTML = 
+                `<strong>Additional Metrics:</strong> Injection Duration (T<sub>ID</sub>) = ${tId.toFixed(1)}s &nbsp;|&nbsp; Estimated Peak Time (T<sub>PEAK</sub>) = ${tPeak.toFixed(1)}s`;
+            document.getElementById('resultBox').classList.remove('hidden');
+        }
+
+        function calculateWu() {
+            const tCross = parseFloat(document.getElementById('wuTcross').value);
+            const tSd = parseFloat(document.getElementById('wuTsd').value);
+
+            if (isNaN(tCross) || isNaN(tSd)) {
+                alert("Please fill in all required input fields with valid numbers.");
+                return;
+            }
+
+            const tDelay = tCross - tSd;
+
+            document.getElementById('outputDelay').innerText = tDelay.toFixed(1) + " s";
+            document.getElementById('outputDelay').className = "text-3xl font-extrabold text-green-700";
+            document.getElementById('extraInfo').innerHTML = 
+                `<strong>Protocol Info:</strong> Optimized Low-Dose Protocol (60% Contrast Reduction: 20 mL Total @ 370 mgI/mL). Scan completes prior to venous contamination.`;
+            document.getElementById('resultBox').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
