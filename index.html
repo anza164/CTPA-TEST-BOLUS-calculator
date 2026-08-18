@@ -28,81 +28,6 @@
 
         <div class="p-6">
             
-            <!-- ================= STEP-BY-STEP SOP GUIDE WITH REAL IMAGE ================= -->
-            <div class="mb-6 border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
-                <button onclick="toggleSop()" class="w-full p-3 text-left font-semibold text-xs uppercase tracking-wider text-slate-700 flex justify-between items-center bg-slate-100 hover:bg-slate-200 transition">
-                    <span>📖 Clinical SOP & Anatomical ROI Placement Guide</span>
-                    <span id="sopToggleIcon" class="text-blue-600 font-bold">+ Expand Guide</span>
-                </button>
-                
-                <div id="sopContent" class="hidden p-4 text-xs text-slate-600 space-y-5 border-t border-slate-200 bg-white">
-                    
-                    <!-- Step 1 -->
-                    <div>
-                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 1: Test Bolus Monitoring Scan Setup</h4>
-                        <ul class="list-disc pl-4 space-y-1">
-                            <li>Position dynamic monitoring slice at the level of the <strong>Main Pulmonary Artery (MPA) trunk</strong>.</li>
-                            <li><strong>Engine A (Bae):</strong> Inject 20 mL contrast (370 mgI/mL) + 20 mL saline @ <strong>4.5 mL/s</strong>.</li>
-                            <li><strong>Engine B (Wu et al.):</strong> Inject 5 mL contrast (370 mgI/mL) + 45 mL saline @ <strong>4.5 mL/s</strong>.</li>
-                            <li>Start low-dose monitoring scans simultaneously with contrast injection.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Step 2: ROI Placement & Real Image -->
-                    <div>
-                        <h4 class="font-bold text-slate-800 text-sm mb-2">Step 2: ROI Placement & Curve Generation</h4>
-                        
-                        <!-- Figure & Caption Container for index.html -->
-                        <div class="mb-4 flex flex-col items-center justify-center bg-slate-900 p-4 rounded-lg">
-                            <img src="roi_guide.png" alt="Comparison of CTPA Contrast Timing Methods: Bae vs. Wu et al." class="w-full max-w-xl rounded-lg border border-slate-700 shadow" />
-                            <p class="text-[11px] text-slate-300 mt-3 text-left leading-relaxed max-w-xl">
-                                <strong>Figure: Anatomical ROI Placement & Time-Density Curves (TDC) for CTPA Timing.</strong><br>
-                                <strong>1. Bae Equation Method (Single Vessel):</strong> Axial CT image demonstrating a single circular ROI located in the Main Pulmonary Artery (MPA, red). The single-line TDC curve identifies peak contrast arrival time (T<sub>ARR</sub>).<br>
-                                <strong>2. Wu et al. Method (Dual Vessel):</strong> Axial CT image showing dual ROIs placed in the MPA (red) and Pulmonary Vein (PV, blue). The biphasic TDC tracks arterial and venous enhancement, identifying the intersection time (T<sub>CROSS</sub>) prior to venous contamination.
-                            </p>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <div class="p-2.5 bg-blue-50 border border-blue-200 rounded">
-                                <strong class="text-blue-900 block mb-1">Engine A (Single ROI - Bae):</strong>
-                                <p>1. Draw <strong>ROI 1 (Red)</strong> inside MPA trunk (~80-100 mm²).</p>
-                                <p>2. Generate single Time-Enhancement Curve (TEC).</p>
-                                <p>3. Identify <strong>T<sub>ARR</sub></strong> (second when HU begins rapid rise).</p>
-                            </div>
-                            <div class="p-2.5 bg-green-50 border border-green-200 rounded">
-                                <strong class="text-green-900 block mb-1">Engine B (Dual ROI - Wu et al.):</strong>
-                                <p>1. Draw <strong>ROI 1 (Red)</strong> inside MPA trunk.</p>
-                                <p>2. Draw <strong>ROI 2 (Blue)</strong> inside Pulmonary Vein (~20 mm²).</p>
-                                <p>3. Generate Biphasic Curve.</p>
-                                <p>4. Identify <strong>T<sub>CROSS</sub></strong> (intersection point of Artery & Vein curves).</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div>
-                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 3: Scan Duration & Delay Calculation</h4>
-                        <ul class="list-disc pl-4 space-y-1">
-                            <li>Obtain <strong>Scan Duration (T<sub>SD</sub>)</strong> from diagnostic acquisition protocol card.</li>
-                            <li>Enter T<sub>ARR</sub> or T<sub>CROSS</sub> into the calculator below to derive <strong>T<sub>DELAY</sub></strong>.</li>
-                        </ul>
-                    </div>
-
-<!-- Step 4 -->
-<div>
-    <h4 class="font-bold text-slate-800 text-sm mb-1">Step 4: Scanner Console Setup & Diagnostic Execution</h4>
-    <ul class="list-disc pl-4 space-y-1">
-        <li>Enter the calculated <strong>T<sub>DELAY</sub></strong> value directly into the CT scanner console.</li>
-        <li>Program contrast injector for diagnostic scan at a flow rate of <strong>4.5 mL/s</strong>:
-            <ul class="list-disc pl-6 space-y-0.5 text-slate-500 mt-1">
-                <li><strong>Engine A (Bae Protocol):</strong> 30 mL contrast volume + 35 mL saline chaser</li>
-                <li><strong>Engine B (Wu Protocol):</strong> 15 mL contrast volume + 35 mL saline chaser</li>
-            </ul>
-        </li>
-        <li>Press the <strong>Injector Start</strong> and <strong>CT Scanner Start</strong> buttons simultaneously to initiate the diagnostic acquisition.</li>
-    </ul>
-</div>
-
             <!-- ================= ENGINE A: BAE EQUATION ================= -->
             <div id="sectionBae" class="space-y-5">
                 <div class="p-3 bg-blue-50 border-l-4 border-blue-500 text-xs text-blue-900 rounded-r">
@@ -131,7 +56,7 @@
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Diagnostic Contrast Volume [mL]:</label>
                         <input type="number" id="baeVol" value="30" readonly class="mt-1 block w-full bg-slate-100 border border-slate-300 rounded-md p-2 text-sm text-slate-600 font-medium">
                         <p class="text-[11px] text-slate-500 mt-1">
-                            <strong>Standard Protocol:</strong> Fixed at 30 mL diagnostic bolus (Total contrast volume = 50 mL).
+                            <strong>Standard Protocol:</strong> Fixed at 30 mL diagnostic bolus (+ 35 mL saline chaser).
                         </p>
                     </div>
 
@@ -154,7 +79,7 @@
                 <div class="p-3 bg-green-50 border-l-4 border-green-500 text-xs text-green-900 rounded-r">
                     <p class="font-bold">Wu et al. Biphasic Formula (2020):</p>
                     <p class="mt-1">T<sub>DELAY</sub> = T<sub>CROSS</sub> - T<sub>SD</sub></p>
-                    <p class="mt-0.5 text-[11px]">Protocol: 5 mL Test + 15 mL Diagnostic (Total 20 mL @ 370 mgI/mL, 4.5 mL/s)</p>
+                    <p class="mt-0.5 text-[11px]">Protocol: 5 mL Test + 15 mL Diagnostic (+ 35 mL saline chaser @ 4.5 mL/s)</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -189,6 +114,85 @@
                 </div>
                 <div id="extraInfo" class="text-xs text-slate-500 mt-3 border-t border-slate-200 pt-2"></div>
             </div>
+
+            <!-- ================= STEP-BY-STEP SOP GUIDE WITH REAL IMAGE ================= -->
+            <div class="mt-10 border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
+                <button onclick="toggleSop()" class="w-full p-3 text-left font-semibold text-xs uppercase tracking-wider text-slate-700 flex justify-between items-center bg-slate-100 hover:bg-slate-200 transition">
+                    <span>📖 Clinical SOP & Anatomical ROI Placement Guide</span>
+                    <span id="sopToggleIcon" class="text-blue-600 font-bold">+ Expand Guide</span>
+                </button>
+                
+                <div id="sopContent" class="hidden p-4 text-xs text-slate-600 space-y-5 border-t border-slate-200 bg-white">
+                    
+                    <!-- Step 1 -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 1: Test Bolus Monitoring Scan Setup</h4>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>Position dynamic monitoring slice at the level of the <strong>Main Pulmonary Artery (MPA) trunk</strong>.</li>
+                            <li><strong>Engine A (Bae):</strong> Inject 20 mL contrast (370 mgI/mL) + 20 mL saline @ <strong>4.5 mL/s</strong>.</li>
+                            <li><strong>Engine B (Wu et al.):</strong> Inject 5 mL contrast (370 mgI/mL) + 45 mL saline @ <strong>4.5 mL/s</strong>.</li>
+                            <li>Start low-dose monitoring scans simultaneously with contrast injection.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Step 2: ROI Placement & Real Image -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-2">Step 2: ROI Placement & Curve Generation</h4>
+                        
+                        <!-- Figure & Caption Container -->
+                        <div class="mb-4 flex flex-col items-center justify-center bg-slate-900 p-4 rounded-lg">
+                            <img src="roi_guide.png" alt="Comparison of CTPA Contrast Timing Methods: Bae vs. Wu et al." class="w-full max-w-xl rounded-lg border border-slate-700 shadow" />
+                            <p class="text-[11px] text-slate-300 mt-3 text-left leading-relaxed max-w-xl">
+                                <strong>Figure: Anatomical ROI Placement & Time-Density Curves (TDC) for CTPA Timing.</strong><br>
+                                <strong>1. Bae Equation Method (Single Vessel):</strong> Axial CT image demonstrating a single circular ROI located in the Main Pulmonary Artery (MPA, red). The single-line TDC curve identifies peak contrast arrival time (T<sub>ARR</sub>).<br>
+                                <strong>2. Wu et al. Method (Dual Vessel):</strong> Axial CT image showing dual ROIs placed in the MPA (red) and Pulmonary Vein (PV, blue). The biphasic TDC tracks arterial and venous enhancement, identifying the intersection time (T<sub>CROSS</sub>) prior to venous contamination.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="p-2.5 bg-blue-50 border border-blue-200 rounded">
+                                <strong class="text-blue-900 block mb-1">Engine A (Single ROI - Bae):</strong>
+                                <p>1. Draw <strong>ROI 1 (Red)</strong> inside MPA trunk (~80-100 mm²).</p>
+                                <p>2. Generate single Time-Enhancement Curve (TEC).</p>
+                                <p>3. Identify <strong>T<sub>ARR</sub></strong> (second when HU begins rapid rise).</p>
+                            </div>
+                            <div class="p-2.5 bg-green-50 border border-green-200 rounded">
+                                <strong class="text-green-900 block mb-1">Engine B (Dual ROI - Wu et al.):</strong>
+                                <p>1. Draw <strong>ROI 1 (Red)</strong> inside MPA trunk.</p>
+                                <p>2. Draw <strong>ROI 2 (Blue)</strong> inside Pulmonary Vein (~20 mm²).</p>
+                                <p>3. Generate Biphasic Curve.</p>
+                                <p>4. Identify <strong>T<sub>CROSS</sub></strong> (intersection point of Artery & Vein curves).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 3: Scan Duration & Delay Calculation</h4>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>Obtain <strong>Scan Duration (T<sub>SD</sub>)</strong> from diagnostic acquisition protocol card.</li>
+                            <li>Enter T<sub>ARR</sub> or T<sub>CROSS</sub> into the calculator above to derive <strong>T<sub>DELAY</sub></strong>.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 4: Scanner Console Setup & Diagnostic Execution</h4>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>Enter the calculated <strong>T<sub>DELAY</sub></strong> value directly into the CT scanner console.</li>
+                            <li>Program contrast injector for diagnostic scan at a flow rate of <strong>4.5 mL/s</strong>:
+                                <ul class="list-disc pl-6 space-y-0.5 text-slate-500 mt-1">
+                                    <li><strong>Engine A (Bae Protocol):</strong> 30 mL contrast volume + 35 mL saline chaser</li>
+                                    <li><strong>Engine B (Wu Protocol):</strong> 15 mL contrast volume + 35 mL saline chaser</li>
+                                </ul>
+                            </li>
+                            <li>Press the <strong>Injector Start</strong> and <strong>CT Scanner Start</strong> buttons simultaneously to initiate the diagnostic acquisition.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -267,7 +271,7 @@
             document.getElementById('outputDelay').innerText = tDelay.toFixed(1) + " s";
             document.getElementById('outputDelay').className = "text-3xl font-extrabold text-green-700";
             document.getElementById('extraInfo').innerHTML = 
-                `<strong>Protocol Info:</strong> Optimized Low-Dose Protocol (60% Contrast Reduction: 20 mL Total @ 370 mgI/mL, 4.5 mL/s). Scan completes prior to venous contamination.`;
+                `<strong>Protocol Info:</strong> Optimized Low-Dose Protocol (60% Contrast Reduction: 20 mL Total @ 370 mgI/mL, 4.5 mL/s + 35 mL Saline). Scan completes prior to venous contamination.`;
             document.getElementById('resultBox').classList.remove('hidden');
         }
     </script>
