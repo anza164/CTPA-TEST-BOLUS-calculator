@@ -62,12 +62,12 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Diagnostic Contrast Volume [mL]:</label>
-                        <input type="number" id="baeVol" value="30" readonly class="mt-1 block w-full bg-slate-100 border border-slate-300 rounded-md p-2 text-sm text-slate-600 font-medium">
-                        <p class="text-[11px] text-slate-500 mt-1">
-                            <strong>Standard Protocol:</strong> Fixed at 30 mL diagnostic bolus (+ 35 mL saline chaser).
-                        </p>
-                    </div>
+    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Diagnostic Contrast Volume [mL]:</label>
+    <input type="number" id="baeVol" value="30" step="1" placeholder="e.g., 30" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+    <p class="text-[11px] text-slate-500 mt-1">
+        <strong>Protocol Volume:</strong> Default 30 mL (Editable for site-specific protocol adaptation).
+    </p>
+</div>
 
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Scan Duration (T<sub>SD</sub>) [sec]:</label>
@@ -245,26 +245,27 @@
         }
 
         function calculateBae() {
-            const tArr = parseFloat(document.getElementById('baeTarr').value);
-            const flowRate = parseFloat(document.getElementById('baeFlowRate').value);
-            const vol = parseFloat(document.getElementById('baeVol').value);
-            const tSd = parseFloat(document.getElementById('baeTsd').value);
+    const tArr = parseFloat(document.getElementById('baeTarr').value);
+    const flowRate = parseFloat(document.getElementById('baeFlowRate').value);
+    const vol = parseFloat(document.getElementById('baeVol').value);
+    const tSd = parseFloat(document.getElementById('baeTsd').value);
 
-            if (isNaN(tArr) || isNaN(flowRate) || isNaN(tSd)) {
-                alert("Please fill in all required input fields with valid numbers.");
-                return;
-            }
+    // Semakan validasi termasuk isNaN(vol)
+    if (isNaN(tArr) || isNaN(flowRate) || isNaN(vol) || isNaN(tSd)) {
+        alert("Please fill in all required input fields with valid numbers.");
+        return;
+    }
 
-            const tId = vol / flowRate; 
-            const tPeak = tId + tArr - 5.3;
-            const tDelay = tPeak - (0.5 * tSd);
+    const tId = vol / flowRate; 
+    const tPeak = tId + tArr - 5.3;
+    const tDelay = tPeak - (0.5 * tSd);
 
-            document.getElementById('outputDelay').innerText = tDelay.toFixed(1) + " s";
-            document.getElementById('outputDelay').className = "text-3xl font-extrabold text-blue-700";
-            document.getElementById('extraInfo').innerHTML = 
-                `<strong>Additional Metrics:</strong> Injection Duration (T<sub>ID</sub>) = ${tId.toFixed(1)}s &nbsp;|&nbsp; Estimated Peak Time (T<sub>PEAK</sub>) = ${tPeak.toFixed(1)}s`;
-            document.getElementById('resultBox').classList.remove('hidden');
-        }
+    document.getElementById('outputDelay').innerText = tDelay.toFixed(1) + " s";
+    document.getElementById('outputDelay').className = "text-3xl font-extrabold text-blue-700";
+    document.getElementById('extraInfo').innerHTML = 
+        `<strong>Additional Metrics:</strong> Diagnostic Vol = ${vol} mL &nbsp;|&nbsp; Injection Duration (T<sub>ID</sub>) = ${tId.toFixed(1)}s &nbsp;|&nbsp; Estimated Peak Time (T<sub>PEAK</sub>) = ${tPeak.toFixed(1)}s`;
+    document.getElementById('resultBox').classList.remove('hidden');
+}
 
         function calculateWu() {
             const tCross = parseFloat(document.getElementById('wuTcross').value);
