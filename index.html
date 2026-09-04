@@ -54,19 +54,22 @@
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Injection Flow Rate [mL/s]:</label>
                         <input type="number" id="baeFlowRate" value="4.5" step="0.1" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
-                        <p class="text-[11px] text-slate-500 mt-1"><strong>Standardized Protocol:</strong> Programmed flow rate set on power injector.</p>
+                        <p class="text-[11px] text-slate-500 mt-1"><strong>Standardized Protocol:</strong> Programmed flow rate set on power injector (Default: 4.5 mL/s).</p>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Diagnostic Contrast Volume [mL]:</label>
                         <input type="number" id="baeVol" value="30" step="1" placeholder="e.g., 30" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                        <p class="text-[11px] text-slate-500 mt-1"><strong>Protocol Volume:</strong> Default 30 mL (Editable for site-specific protocol adaptation).</p>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Pure Scan Duration (T<sub>SD</sub>) [sec]:</label>
                         <input type="number" id="baeTsd" step="0.1" placeholder="e.g., 2.8" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <p class="text-[11px] text-slate-500 mt-1"><strong>Source:</strong> Pure X-ray acquisition time read from CT diagnostic protocol card.</p>
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Scanner System Latency (T<sub>SYS</sub>) [sec]:</label>
                         <input type="number" id="baeTsys" value="2.0" step="0.1" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <p class="text-[11px] text-slate-500 mt-1"><strong>Pre-scan Latency:</strong> Hardware delay for tube spin-up, table feed, & breath-hold command (Default: 2.0s).</p>
                     </div>
                 </div>
                 <button onclick="calculateBae()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-md transition text-sm">
@@ -91,10 +94,12 @@
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Pure Scan Duration (T<sub>SD</sub>) [sec]:</label>
                         <input type="number" id="wuTsd" step="0.1" placeholder="e.g., 2.4" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <p class="text-[11px] text-slate-500 mt-1"><strong>Source:</strong> Pure acquisition time read from CT protocol card.</p>
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Scanner System Latency (T<sub>SYS</sub>) [sec]:</label>
                         <input type="number" id="wuTsys" value="2.0" step="0.1" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <p class="text-[11px] text-slate-500 mt-1"><strong>Pre-scan Latency:</strong> Hardware delay for tube spin-up, table movement, & breath-hold audio (Default: 2.0s).</p>
                     </div>
                 </div>
                 <button onclick="calculateWu()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-4 rounded-md transition text-sm">
