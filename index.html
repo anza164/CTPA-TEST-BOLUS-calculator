@@ -7,17 +7,17 @@
     <link rel="canonical" href="https://anza164.github.io/CTPA-TEST-BOLUS-calculator/">
 
     <!-- Primary Meta Tags -->
-    <title>CTPA Test Bolus & Scan Delay Calculator | Bae & Wu Protocols</title>
-    <meta name="title" content="CTPA Test Bolus & Scan Delay Calculator | Bae & Wu Protocols">
-    <meta name="description" content="Free online CTPA test bolus scan delay calculator using Bae's equation and Wu et al. biphasic protocol for optimal CT pulmonary angiography timing.">
-    <meta name="keywords" content="CTPA test bolus calculator, CTPA scan delay calculator, CTPA timing calculator, Bae equation, Wu et al protocol, test bolus CT, radiology calculator">
+    <title>CTPA Test Bolus & Scan Delay Calculator | Precision Hardware Compensated</title>
+    <meta name="title" content="CTPA Test Bolus & Scan Delay Calculator | Precision Hardware Compensated">
+    <meta name="description" content="Free online CTPA test bolus scan delay calculator incorporating scanner hardware system latency, Bae's equation, and T_ideal precision timing protocols.">
+    <meta name="keywords" content="CTPA test bolus calculator, CTPA scan delay calculator, CTPA timing calculator, Bae equation, T_ideal protocol, system latency compensation, radiology calculator">
     <meta name="author" content="anza164">
 
     <!-- Open Graph / Social Preview -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://anza164.github.io/CTPA-TEST-BOLUS-calculator/">
     <meta property="og:title" content="CTPA Test Bolus & Scan Delay Calculator">
-    <meta property="og:description" content="Precision timing system for CT Pulmonary Angiography based on peer-reviewed Bae & Wu et al. protocols.">
+    <meta property="og:description" content="Precision timing system for CT Pulmonary Angiography with automated scanner system latency compensation.">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,22 +28,24 @@
         <!-- Header -->
         <div class="bg-blue-700 p-6 text-white">
             <h1 class="text-2xl font-bold">CTPA Scan Delay Calculator</h1>
-            <p class="text-blue-200 text-sm mt-1">Precision Timing System for CT Pulmonary Angiography (Bae & Wu et al. Protocols)</p>
+            <p class="text-blue-200 text-sm mt-1">Precision Timing System for CT Pulmonary Angiography (Hardware Latency Compensated)</p>
         </div>
-<!-- Prominent Clinical Disclaimer Box -->
-<div class="mb-6 p-4 bg-amber-50 border-l-4 border-amber-500 rounded-r text-amber-900 text-xs font-bold leading-relaxed shadow-sm">
-    <p>
-        <span class="text-amber-950 font-black uppercase tracking-wider block mb-1">⚠️ Clinical Disclaimer:</span> 
-        This online calculator is designed as a decision-support and educational tool for qualified radiographers and radiologists. While based on peer-reviewed published equations (Bae et al. & Wu et al.), the final verification of scan parameters, injection rates, and patient safety remains the sole responsibility of the operating clinical staff.
-    </p>
-</div>
+
+        <!-- Prominent Clinical Disclaimer Box -->
+        <div class="p-4 bg-amber-50 border-l-4 border-amber-500 text-amber-900 text-xs font-bold leading-relaxed shadow-sm">
+            <p>
+                <span class="text-amber-950 font-black uppercase tracking-wider block mb-1">⚠️ Clinical Disclaimer:</span> 
+                This online calculator is designed as a decision-support and educational tool for qualified radiographers and radiologists. While based on peer-reviewed published equations and spatial-temporal timing models, final verification of scan parameters, injection rates, and patient safety remains the sole responsibility of the operating clinical staff.
+            </p>
+        </div>
+
         <!-- Engine Toggle Tabs -->
         <div class="flex border-b border-slate-200 bg-slate-50">
             <button id="btnBae" onclick="switchEngine('bae')" class="flex-1 py-3 px-4 text-sm font-semibold text-blue-700 border-b-2 border-blue-700 bg-white transition">
-                Engine A: Bae's Equation (50 mL Standard)
+                Engine A: Bae's Equation (Standard Bolus)
             </button>
             <button id="btnWu" onclick="switchEngine('wu')" class="flex-1 py-3 px-4 text-sm font-semibold text-slate-500 hover:text-blue-700 transition">
-                Engine B: Wu et al. (25 mL Low-Dose)
+                Engine B: T<sub>ideal</sub> Protocol (20 mL Low-Dose)
             </button>
         </div>
 
@@ -52,8 +54,8 @@
             <!-- ================= ENGINE A: BAE EQUATION ================= -->
             <div id="sectionBae" class="space-y-5">
                 <div class="p-3 bg-blue-50 border-l-4 border-blue-500 text-xs text-blue-900 rounded-r">
-                    <p class="font-bold">Bae's Standard Formula:</p>
-                    <p class="mt-1">T<sub>PEAK</sub> = T<sub>ID</sub> + T<sub>ARR</sub> - 5.3 &nbsp;|&nbsp; T<sub>DELAY</sub> = T<sub>PEAK</sub> - ½ T<sub>SD</sub></p>
+                    <p class="font-bold">Bae's Standard Formula (Hardware Compensated):</p>
+                    <p class="mt-1">T<sub>PEAK</sub> = T<sub>ID</sub> + T<sub>ARR</sub> - 5.3 &nbsp;|&nbsp; T<sub>DELAY</sub> = T<sub>PEAK</sub> - ½ T<sub>SD</sub> - T<sub>SYS</sub></p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -69,60 +71,76 @@
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Injection Flow Rate [mL/s]:</label>
                         <input type="number" id="baeFlowRate" value="4.5" step="0.1" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
                         <p class="text-[11px] text-slate-500 mt-1">
-                            <strong>Standardized Protocol:</strong> Programmed flow rate set on dual-head power injector (4.5 mL/s).
+                            <strong>Standardized Protocol:</strong> Programmed flow rate set on power injector (Default: 4.5 mL/s).
                         </p>
                     </div>
 
                     <div>
-    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Diagnostic Contrast Volume [mL]:</label>
-    <input type="number" id="baeVol" value="30" step="1" placeholder="e.g., 30" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
-    <p class="text-[11px] text-slate-500 mt-1">
-        <strong>Protocol Volume:</strong> Default 30 mL (Editable for site-specific protocol adaptation).
-    </p>
-</div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Diagnostic Contrast Volume [mL]:</label>
+                        <input type="number" id="baeVol" value="30" step="1" placeholder="e.g., 30" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            <strong>Protocol Volume:</strong> Default 30 mL (Editable for site-specific protocol adaptation).
+                        </p>
+                    </div>
 
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Scan Duration (T<sub>SD</sub>) [sec]:</label>
-                        <input type="number" id="baeTsd" step="0.1" placeholder="e.g., 3.5" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Pure Scan Duration (T<sub>SD</sub>) [sec]:</label>
+                        <input type="number" id="baeTsd" step="0.1" placeholder="e.g., 2.8" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
                         <p class="text-[11px] text-slate-500 mt-1">
-                            <strong>Source:</strong> Read total acquisition time from CT diagnostic protocol card.
+                            <strong>Source:</strong> Pure X-ray acquisition time read from CT diagnostic protocol card.
+                        </p>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Scanner System Latency (T<sub>SYS</sub>) [sec]:</label>
+                        <input type="number" id="baeTsys" value="2.0" step="0.1" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            <strong>Pre-scan Latency:</strong> Hardware delay for tube spin-up, table feed, & breath-hold command (Default: 2.0s).
                         </p>
                     </div>
                 </div>
 
                 <button onclick="calculateBae()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-md transition text-sm">
-                    Calculate Delay (Bae)
+                    Calculate Delay (Bae + Latency Compensated)
                 </button>
             </div>
 
-            <!-- ================= ENGINE B: WU ET AL. EQUATION ================= -->
+            <!-- ================= ENGINE B: T_IDEAL EQUATION ================= -->
             <div id="sectionWu" class="hidden space-y-5">
                 <div class="p-3 bg-green-50 border-l-4 border-green-500 text-xs text-green-900 rounded-r">
-                    <p class="font-bold">Wu et al. Biphasic Formula (2020):</p>
-                    <p class="mt-1">T<sub>DELAY</sub> = T<sub>CROSS</sub> - T<sub>SD</sub></p>
-                    <p class="mt-0.5 text-[11px]">Protocol: 10 mL Test (+ 45 mL saline chaser @ 4.5 mL/s) + 15 mL Diagnostic (+ 35 mL saline chaser @ 4.5 mL/s)</p>
+                    <p class="font-bold">Precision T<sub>ideal</sub> Spatial-Temporal Formula:</p>
+                    <p class="mt-1">T<sub>DELAY</sub> = T<sub>ideal</sub> - ½ T<sub>SD</sub> - T<sub>SYS</sub></p>
+                    <p class="mt-0.5 text-[11px]">Protocol: 20 mL Test (+ 20 mL Saline @ 4.5 mL/s) + 20 mL Diagnostic (+ 30 mL Saline @ 4.5 mL/s)</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Intersection Time (T<sub>CROSS</sub>) [sec]:</label>
-                        <input type="number" id="wuTcross" step="0.5" placeholder="e.g., 11.0" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-green-500 focus:border-green-500">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Ideal MPA Peak Time (T<sub>ideal</sub>) [sec]:</label>
+                        <input type="number" id="wuTideal" step="0.5" placeholder="e.g., 9.0" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm focus:ring-green-500 focus:border-green-500">
                         <p class="text-[11px] text-slate-500 mt-1">
-                            <strong>Source:</strong> Read from dual-ROI graph. Second where MPA curve and PV curve intersect.
+                            <strong>Source:</strong> Timestamp where MPA peak enhancement is optimal prior to aortic enhancement.
                         </p>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Scan Duration (T<sub>SD</sub>) [sec]:</label>
-                        <input type="number" id="wuTsd" step="0.1" placeholder="e.g., 3.0" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Pure Scan Duration (T<sub>SD</sub>) [sec]:</label>
+                        <input type="number" id="wuTsd" step="0.1" placeholder="e.g., 2.4" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
                         <p class="text-[11px] text-slate-500 mt-1">
-                            <strong>Source:</strong> Read total chest acquisition time from CT diagnostic protocol card.
+                            <strong>Source:</strong> Pure acquisition time read from CT protocol card.
+                        </p>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700">Scanner System Latency (T<sub>SYS</sub>) [sec]:</label>
+                        <input type="number" id="wuTsys" value="2.0" step="0.1" class="mt-1 block w-full border border-slate-300 rounded-md p-2 text-sm">
+                        <p class="text-[11px] text-slate-500 mt-1">
+                            <strong>Pre-scan Latency:</strong> Hardware delay for tube spin-up, table movement, & breath-hold audio (Default: 2.0s).
                         </p>
                     </div>
                 </div>
 
                 <button onclick="calculateWu()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-4 rounded-md transition text-sm">
-                    Calculate Delay (Wu et al.)
+                    Calculate Delay (T<sub>ideal</sub> Protocol)
                 </button>
             </div>
 
@@ -130,7 +148,7 @@
             <div id="resultBox" class="hidden mt-6 p-4 rounded-lg bg-slate-50 border border-slate-200">
                 <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500">Calculation Summary:</h3>
                 <div class="flex items-baseline justify-between mt-2">
-                    <span class="text-slate-700 font-medium text-sm">Recommended Scan Delay (T<sub>DELAY</sub>):</span>
+                    <span class="text-slate-700 font-medium text-sm">Recommended Console Scan Delay (T<sub>DELAY</sub>):</span>
                     <span id="outputDelay" class="text-3xl font-extrabold text-blue-700">0.0 s</span>
                 </div>
                 <div id="extraInfo" class="text-xs text-slate-500 mt-3 border-t border-slate-200 pt-2"></div>
@@ -149,9 +167,9 @@
                     <div>
                         <h4 class="font-bold text-slate-800 text-sm mb-1">Step 1: Test Bolus Monitoring Scan Setup</h4>
                         <ul class="list-disc pl-4 space-y-1">
-                            <li>Position dynamic monitoring slice at the level of the <strong>Main Pulmonary Artery (MPA) trunk</strong>.</li>
+                            <li>Position dynamic monitoring slice at the level of the <strong>Main Pulmonary Artery (MPA) trunk / Carina</strong>.</li>
                             <li><strong>Engine A (Bae):</strong> Inject 20 mL contrast (370 mgI/mL) + 20 mL saline @ <strong>4.5 mL/s</strong>.</li>
-                            <li><strong>Engine B (Wu et al.):</strong> Inject 10 mL contrast (370 mgI/mL) + 45 mL saline @ <strong>4.5 mL/s</strong>.</li>
+                            <li><strong>Engine B (T<sub>ideal</sub> Protocol):</strong> Inject 20 mL contrast (370 mgI/mL) + 20 mL saline @ <strong>4.5 mL/s</strong>.</li>
                             <li>Start low-dose monitoring scans simultaneously with contrast injection.</li>
                         </ul>
                     </div>
@@ -162,11 +180,11 @@
                         
                         <!-- Figure & Caption Container -->
                         <div class="mb-4 flex flex-col items-center justify-center bg-slate-900 p-4 rounded-lg">
-                            <img src="roi_guide.png" alt="Comparison of CTPA Contrast Timing Methods: Bae vs. Wu et al." class="w-full max-w-xl rounded-lg border border-slate-700 shadow" />
+                            <img src="roi_guide.png" alt="Comparison of CTPA Contrast Timing Methods: Bae vs. T_ideal Protocol" class="w-full max-w-xl rounded-lg border border-slate-700 shadow" />
                             <p class="text-[11px] text-slate-300 mt-3 text-left leading-relaxed max-w-xl">
                                 <strong>Figure: Anatomical ROI Placement & Time-Density Curves (TDC) for CTPA Timing.</strong><br>
-                                <strong>1. Bae Equation Method (Single Vessel):</strong> Axial CT image demonstrating a single circular ROI located in the Main Pulmonary Artery (MPA, red). The single-line TDC curve identifies peak contrast arrival time (T<sub>ARR</sub>).<br>
-                                <strong>2. Wu et al. Method (Dual Vessel):</strong> Axial CT image showing dual ROIs placed in the MPA (red) and Pulmonary Vein (PV, blue). The biphasic TDC tracks arterial and venous enhancement, identifying the intersection time (T<sub>CROSS</sub>) prior to venous contamination.
+                                <strong>1. Bae Equation Method (Single Vessel):</strong> Axial CT image demonstrating a single circular ROI located in the Main Pulmonary Artery (MPA, red). The single-line TDC curve identifies contrast arrival time (T<sub>ARR</sub>).<br>
+                                <strong>2. T<sub>ideal</sub> Protocol (Multi-Vessel):</strong> Axial CT image showing ROIs in the MPA (red), Ascending Aorta, and SVC. The TDC tracks arterial enhancement, identifying T<sub>ideal</sub> prior to aortic enhancement while verifying SVC attenuation (<350 HU).
                             </p>
                         </div>
 
@@ -178,21 +196,21 @@
                                 <p>3. Identify <strong>T<sub>ARR</sub></strong> (second when HU begins rapid rise).</p>
                             </div>
                             <div class="p-2.5 bg-green-50 border border-green-200 rounded">
-                                <strong class="text-green-900 block mb-1">Engine B (Dual ROI - Wu et al.):</strong>
-                                <p>1. Draw <strong>ROI 1 (Red)</strong> inside MPA trunk.</p>
-                                <p>2. Draw <strong>ROI 2 (Blue)</strong> inside Pulmonary Vein (~20 mm²).</p>
-                                <p>3. Generate Biphasic Curve.</p>
-                                <p>4. Identify <strong>T<sub>CROSS</sub></strong> (intersection point of Artery & Vein curves).</p>
+                                <strong class="text-green-900 block mb-1">Engine B (3-Vessel - T<sub>ideal</sub> Protocol):</strong>
+                                <p>1. Monitor MPA, Ascending Aorta, and SVC.</p>
+                                <p>2. Identify <strong>T<sub>ideal</sub></strong> (second where MPA reaches maximum peak prior to aortic enhancement).</p>
+                                <p>3. Verify SVC attenuation (<350 HU) to prevent RPA streak artifacts.</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 3 -->
                     <div>
-                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 3: Scan Duration & Delay Calculation</h4>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1">Step 3: Scan Duration & Hardware Latency Input</h4>
                         <ul class="list-disc pl-4 space-y-1">
-                            <li>Obtain <strong>Scan Duration (T<sub>SD</sub>)</strong> from diagnostic acquisition protocol card.</li>
-                            <li>Enter T<sub>ARR</sub> or T<sub>CROSS</sub> into the calculator above to derive <strong>T<sub>DELAY</sub></strong>.</li>
+                            <li>Obtain <strong>Pure Scan Duration (T<sub>SD</sub>)</strong> from diagnostic acquisition protocol card.</li>
+                            <li>Set <strong>Scanner System Latency (T<sub>SYS</sub>)</strong> pre-scan delay (Default: 2.0s for tube spin-up, table feed, and audio prompt).</li>
+                            <li>Enter values into the calculator above to derive <strong>T<sub>DELAY</sub></strong>.</li>
                         </ul>
                     </div>
 
@@ -204,10 +222,10 @@
                             <li>Program contrast injector for diagnostic scan at a flow rate of <strong>4.5 mL/s</strong>:
                                 <ul class="list-disc pl-6 space-y-0.5 text-slate-500 mt-1">
                                     <li><strong>Engine A (Bae Protocol):</strong> 30 mL contrast volume + 35 mL saline chaser</li>
-                                    <li><strong>Engine B (Wu Protocol):</strong> 15 mL contrast volume + 35 mL saline chaser</li>
+                                    <li><strong>Engine B (T<sub>ideal</sub> Protocol):</strong> 20 mL contrast volume + 30 mL saline chaser</li>
                                 </ul>
                             </li>
-                            <li>Press the <strong>Injector Start</strong> and <strong>CT Scanner Start</strong> buttons simultaneously to initiate the diagnostic acquisition.</li>
+                            <li>Press <strong>Injector Start</strong> and <strong>CT Scanner Start</strong> simultaneously to initiate diagnostic acquisition.</li>
                         </ul>
                     </div>
 
@@ -257,43 +275,46 @@
         }
 
         function calculateBae() {
-    const tArr = parseFloat(document.getElementById('baeTarr').value);
-    const flowRate = parseFloat(document.getElementById('baeFlowRate').value);
-    const vol = parseFloat(document.getElementById('baeVol').value);
-    const tSd = parseFloat(document.getElementById('baeTsd').value);
+            const tArr = parseFloat(document.getElementById('baeTarr').value);
+            const flowRate = parseFloat(document.getElementById('baeFlowRate').value);
+            const vol = parseFloat(document.getElementById('baeVol').value);
+            const tSd = parseFloat(document.getElementById('baeTsd').value);
+            const tSys = parseFloat(document.getElementById('baeTsys').value);
 
-    // Semakan validasi termasuk isNaN(vol)
-    if (isNaN(tArr) || isNaN(flowRate) || isNaN(vol) || isNaN(tSd)) {
-        alert("Please fill in all required input fields with valid numbers.");
-        return;
-    }
-
-    const tId = vol / flowRate; 
-    const tPeak = tId + tArr - 5.3;
-    const tDelay = tPeak - (0.5 * tSd);
-
-    document.getElementById('outputDelay').innerText = tDelay.toFixed(1) + " s";
-    document.getElementById('outputDelay').className = "text-3xl font-extrabold text-blue-700";
-    document.getElementById('extraInfo').innerHTML = 
-        `<strong>Additional Metrics:</strong> Diagnostic Vol = ${vol} mL &nbsp;|&nbsp; Injection Duration (T<sub>ID</sub>) = ${tId.toFixed(1)}s &nbsp;|&nbsp; Estimated Peak Time (T<sub>PEAK</sub>) = ${tPeak.toFixed(1)}s`;
-    document.getElementById('resultBox').classList.remove('hidden');
-}
-
-        function calculateWu() {
-            const tCross = parseFloat(document.getElementById('wuTcross').value);
-            const tSd = parseFloat(document.getElementById('wuTsd').value);
-
-            if (isNaN(tCross) || isNaN(tSd)) {
+            if (isNaN(tArr) || isNaN(flowRate) || isNaN(vol) || isNaN(tSd) || isNaN(tSys)) {
                 alert("Please fill in all required input fields with valid numbers.");
                 return;
             }
 
-            const tDelay = tCross - tSd;
+            const tId = vol / flowRate; 
+            const tPeak = tId + tArr - 5.3;
+            const rawDelay = tPeak - (0.5 * tSd) - tSys;
+            const tDelay = Math.max(0.0, rawDelay);
+
+            document.getElementById('outputDelay').innerText = tDelay.toFixed(1) + " s";
+            document.getElementById('outputDelay').className = "text-3xl font-extrabold text-blue-700";
+            document.getElementById('extraInfo').innerHTML = 
+                `<strong>Additional Metrics:</strong> Diagnostic Vol = ${vol} mL &nbsp;|&nbsp; Injection Duration (T<sub>ID</sub>) = ${tId.toFixed(1)}s &nbsp;|&nbsp; Estimated Peak Time (T<sub>PEAK</sub>) = ${tPeak.toFixed(1)}s &nbsp;|&nbsp; Latency Compensated = -${tSys.toFixed(1)}s`;
+            document.getElementById('resultBox').classList.remove('hidden');
+        }
+
+        function calculateWu() {
+            const tIdeal = parseFloat(document.getElementById('wuTideal').value);
+            const tSd = parseFloat(document.getElementById('wuTsd').value);
+            const tSys = parseFloat(document.getElementById('wuTsys').value);
+
+            if (isNaN(tIdeal) || isNaN(tSd) || isNaN(tSys)) {
+                alert("Please fill in all required input fields with valid numbers.");
+                return;
+            }
+
+            const rawDelay = tIdeal - (0.5 * tSd) - tSys;
+            const tDelay = Math.max(0.0, rawDelay);
 
             document.getElementById('outputDelay').innerText = tDelay.toFixed(1) + " s";
             document.getElementById('outputDelay').className = "text-3xl font-extrabold text-green-700";
             document.getElementById('extraInfo').innerHTML = 
-                `<strong>Protocol Info:</strong> Optimized Low-Dose Protocol (60% Contrast Reduction: 20 mL Total @ 370 mgI/mL, 4.5 mL/s + 35 mL Saline). Scan completes prior to venous contamination.`;
+                `<strong>Protocol Info:</strong> Spatial-temporal offset (-0.5 T<sub>SD</sub>) & hardware latency (-${tSys.toFixed(1)}s T<sub>SYS</sub>) applied. X-ray beam reaches Carina precisely at peak MPA enhancement.`;
             document.getElementById('resultBox').classList.remove('hidden');
         }
     </script>
